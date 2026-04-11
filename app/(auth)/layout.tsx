@@ -1,3 +1,4 @@
+import SocialAuthForm from "@/components/forms/SocialAuthForm";
 import Image from "next/image";
 
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
@@ -12,6 +13,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
           <Image src="/images/site-logo.svg" alt="DevFlow Logo" width={50} height={50} className="object-contain" />
         </div>
         {children}
+        <SocialAuthForm />
       </section>
     </main>
   );
