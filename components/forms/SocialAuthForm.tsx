@@ -3,11 +3,16 @@
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
+import { signIn } from "next-auth/react";
+import ROUTES from "@/constants/routes";
 
 const SocialAuthForm = () => {
-  const handleSignIn = (provider: "github" | "google") => {
+  const handleSignIn = async (provider: "github" | "google") => {
     try {
-      throw new Error("Method not implemented");
+      await signIn(provider, {
+        redirectTo: ROUTES.HOME,
+        redirect: false,
+      });
     } catch (error) {
       toast.error("Sign in failed", {
         description: error instanceof Error ? error.message : "Error occurred during sign in",
