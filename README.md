@@ -2,7 +2,7 @@
 
 > It's like Stack Overflow, with a sprinkle of AI ✨
 
-**Tech stack:** Next.js, Typescript, TailwindCSS, shadcn/ui, Auth.js and more to come.
+**Tech stack:** Next.js, Typescript, TailwindCSS, shadcn/ui, Auth.js, Zod and more to come.
 
 **Status:** In progress 🚧
 
