@@ -1,5 +1,16 @@
+import AuthForm from "@/components/forms/AuthForm";
+import { SignInSchema } from "@/lib/validations";
+import { FieldValues } from "react-hook-form";
+
 const SignIn = () => {
-  return <div>SignIn</div>;
+  return (
+    <AuthForm
+      schema={SignInSchema}
+      defaultValues={{ email: "", password: "" }}
+      onSubmit={(data) => Promise.resolve({ success: true, data })}
+      formType={"SIGN_IN"}
+    />
+  );
 };
 
 export default SignIn;

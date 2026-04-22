@@ -31,7 +31,12 @@ const RootLayout = async ({
     <html lang="en" suppressHydrationWarning>
       <SessionProvider session={session}>
         <body className={`${inter.className} antialiased`}>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
             {children}
           </ThemeProvider>
           <Toaster />
