@@ -1,3 +1,5 @@
+"use client";
+
 import AuthForm from "@/components/forms/AuthForm";
 import { SignInSchema } from "@/lib/validations";
 import { FieldValues } from "react-hook-form";
