@@ -3,8 +3,8 @@ import ROUTES from "./routes";
 export const sidebarLinks = [
   {
     imgURL: "/icons/home.svg",
-    route: "/",
-    label: ROUTES.HOME,
+    route: ROUTES.HOME,
+    label: "Home",
   },
   {
     imgURL: "/icons/users.svg",
