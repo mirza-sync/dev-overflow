@@ -1,6 +1,7 @@
 import ROUTES from "@/constants/routes";
 import Image from "next/image";
 import Link from "next/link";
+import TagCard from "../cards/TagCard";
 
 const RightSidebar = () => {
   const hotQuestions = [
@@ -17,6 +18,13 @@ const RightSidebar = () => {
       id: "4",
       title: "What is the difference between React Context and Redux?",
     },
+  ];
+
+  const popularTags = [
+    { id: "1", name: "JavaScript", questions: 1200 },
+    { id: "2", name: "React", questions: 900 },
+    { id: "3", name: "CSS", questions: 800 },
+    { id: "4", name: "Node.js", questions: 700 },
   ];
 
   return (
@@ -40,6 +48,22 @@ const RightSidebar = () => {
                 className="invert-colors"
               />
             </Link>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-16">
+        <h3 className="h3-bold text-dark200_light900">Popular Tags</h3>
+        <div className="mt-7 flex flex-col gap-4">
+          {popularTags.map((tag) => (
+            <TagCard
+              key={tag.id}
+              id={tag.id}
+              name={tag.name}
+              questions={tag.questions}
+              showCount
+              compact
+            />
           ))}
         </div>
       </div>
