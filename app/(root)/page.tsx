@@ -1,3 +1,4 @@
+import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
 import Link from "next/link";
@@ -15,7 +16,9 @@ export default async function Home() {
           <Link href={ROUTES.ASK_QUESTION}>Ask A Question</Link>
         </Button>
       </section>
-      <section className="mt-11">LocalSearch</section>
+      <section className="mt-11">
+        <LocalSearch />
+      </section>
       HomeFilter
       <div className="mt-10 flex w-full flex-col gap-6">
         <p>QuestionCard</p>
