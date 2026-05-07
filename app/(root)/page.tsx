@@ -1,26 +1,29 @@
-import { auth, signOut } from "@/auth";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
+import Link from "next/link";
 
 export default async function Home() {
-  const session = await auth();
-  console.log("session", session);
-
   return (
     <div>
-      Home
-      <form
-        className="pt-10"
-        action={async () => {
-          "use server";
+      <section className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
+        <h1 className="h1-bold text-dark100_light900">All Questions</h1>
 
-          await signOut({
-            redirectTo: ROUTES.SIGN_IN,
-          });
-        }}
-      >
-        <Button>Sign Out</Button>
-      </form>
+        <Button
+          asChild
+          className="primary-gradient text-light-900! min-h-11.5 px-4 py-3"
+        >
+          <Link href={ROUTES.ASK_QUESTION}>Ask A Question</Link>
+        </Button>
+      </section>
+      <section className="mt-11">LocalSearch</section>
+      HomeFilter
+      <div className="mt-10 flex w-full flex-col gap-6">
+        <p>QuestionCard</p>
+        <p>QuestionCard</p>
+        <p>QuestionCard</p>
+        <p>QuestionCard</p>
+        <p>QuestionCard</p>
+      </div>
     </div>
   );
 }
