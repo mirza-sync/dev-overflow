@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import { Input } from "../ui/input";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { formUrlQuery } from "@/lib/url";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { formUrlQuery, removeKeysFromUrlQuery } from "@/lib/url";
 
 interface LocalSearchProps {
   route: string;
@@ -19,13 +19,18 @@ const LocalSearch = ({
   placeholder = "Search...",
   twClasses,
 }: LocalSearchProps) => {
+  const pathname = usePathname();
   const router = useRouter();
   const serchParams = useSearchParams();
   const query = serchParams.get("query") || "";
-
   const [searchQuery, setSearchQuery] = useState(query);
+  const previousSearchRef = useRef(searchQuery);
 
   useEffect(() => {
+    // Only trigger if search actually changed
+    if (previousSearchRef.current === searchQuery) return;
+    previousSearchRef.current = searchQuery;
+
     if (searchQuery) {
       const newUrl = formUrlQuery({
         params: serchParams.toString(),
@@ -33,6 +38,14 @@ const LocalSearch = ({
         value: searchQuery,
       });
       router.push(newUrl, { scroll: false });
+    } else {
+      if (pathname === route) {
+        const newUrl = removeKeysFromUrlQuery({
+          params: serchParams.toString(),
+          keys: ["query"],
+        });
+        router.push(newUrl, { scroll: false });
+      }
     }
   }, [searchQuery, router, route, serchParams]);
 
