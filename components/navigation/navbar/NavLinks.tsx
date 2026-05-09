@@ -9,7 +9,6 @@ import { usePathname } from "next/navigation";
 
 const NavLinks = ({ isMobileNav = false }) => {
   const pathname = usePathname();
-  console.log("Current pathname:", pathname);
 
   return (
     <div>
