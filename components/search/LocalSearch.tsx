@@ -31,22 +31,26 @@ const LocalSearch = ({
     if (previousSearchRef.current === searchQuery) return;
     previousSearchRef.current = searchQuery;
 
-    if (searchQuery) {
-      const newUrl = formUrlQuery({
-        params: serchParams.toString(),
-        key: "query",
-        value: searchQuery,
-      });
-      router.push(newUrl, { scroll: false });
-    } else {
-      if (pathname === route) {
-        const newUrl = removeKeysFromUrlQuery({
+    const debounce = setTimeout(() => {
+      if (searchQuery) {
+        const newUrl = formUrlQuery({
           params: serchParams.toString(),
-          keysToRemove: ["query"],
+          key: "query",
+          value: searchQuery,
         });
         router.push(newUrl, { scroll: false });
+      } else {
+        if (pathname === route) {
+          const newUrl = removeKeysFromUrlQuery({
+            params: serchParams.toString(),
+            keysToRemove: ["query"],
+          });
+          router.push(newUrl, { scroll: false });
+        }
       }
-    }
+    }, 300);
+
+    return () => clearTimeout(debounce);
   }, [searchQuery, router, route, serchParams, pathname]);
 
   return (
