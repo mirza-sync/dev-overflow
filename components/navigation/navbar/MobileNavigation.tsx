@@ -3,7 +3,6 @@ import {
   Sheet,
   SheetTrigger,
   SheetContent,
-  SheetHeader,
   SheetTitle,
   SheetDescription,
   SheetClose,
@@ -27,6 +26,9 @@ const MobileNavigation = () => {
       </SheetTrigger>
       <SheetContent side="left" className="background-light900_dark200 p-3">
         <SheetTitle className="hidden">Navigation</SheetTitle>
+        <SheetDescription className="hidden">
+          Quick access to the main sections of the site
+        </SheetDescription>
         <Link href="/" className="flex items-center gap-1">
           <Image
             src="/images/site-logo.svg"
