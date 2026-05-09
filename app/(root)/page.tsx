@@ -17,7 +17,7 @@ export default async function Home() {
         </Button>
       </section>
       <section className="mt-11">
-        <LocalSearch />
+        <LocalSearch route="/" />
       </section>
       HomeFilter
       <div className="mt-10 flex w-full flex-col gap-6">

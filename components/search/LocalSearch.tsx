@@ -2,13 +2,14 @@
 
 import Image from "next/image";
 import { Input } from "../ui/input";
-import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { formUrlQuery } from "@/lib/url";
 
 interface LocalSearchProps {
   route: string;
-  imgSrc: string;
-  placeholder: string;
+  imgSrc?: string;
+  placeholder?: string;
   twClasses?: string;
 }
 
@@ -18,15 +19,28 @@ const LocalSearch = ({
   placeholder = "Search...",
   twClasses,
 }: LocalSearchProps) => {
+  const router = useRouter();
   const serchParams = useSearchParams();
   const query = serchParams.get("query") || "";
 
   const [searchQuery, setSearchQuery] = useState(query);
 
+  useEffect(() => {
+    if (searchQuery) {
+      const newUrl = formUrlQuery({
+        params: serchParams.toString(),
+        key: "query",
+        value: searchQuery,
+      });
+      router.push(newUrl, { scroll: false });
+    }
+  }, [searchQuery, router, route, serchParams]);
+
   return (
     <div
       className={`background-light800_darkgradient flex min-h-14 grow items-center rounded-[10px] px-4 ${twClasses}`}
     >
+      {serchParams.toString()}
       <Image
         src={imgSrc}
         width={24}
