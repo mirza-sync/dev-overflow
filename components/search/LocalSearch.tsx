@@ -42,18 +42,17 @@ const LocalSearch = ({
       if (pathname === route) {
         const newUrl = removeKeysFromUrlQuery({
           params: serchParams.toString(),
-          keys: ["query"],
+          keysToRemove: ["query"],
         });
         router.push(newUrl, { scroll: false });
       }
     }
-  }, [searchQuery, router, route, serchParams]);
+  }, [searchQuery, router, route, serchParams, pathname]);
 
   return (
     <div
       className={`background-light800_darkgradient flex min-h-14 grow items-center rounded-[10px] px-4 ${twClasses}`}
     >
-      {serchParams.toString()}
       <Image
         src={imgSrc}
         width={24}
