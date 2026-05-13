@@ -42,11 +42,13 @@ const questions = [
 ];
 
 export default async function Home({ searchParams }: SearchParams) {
-  const { query = "" } = await searchParams;
+  const { query = "", filter = "" } = await searchParams;
 
-  const filteredQuestions = questions.filter((question) =>
-    question.title.toLowerCase().includes(query?.toLocaleLowerCase())
-  );
+  const filteredQuestions = questions.filter((question) => {
+    const matchesQuery = question.title.toLowerCase().includes(query?.toLocaleLowerCase());
+    const matchesFilter = !filter || question.tags.some(tag => tag.name.toLowerCase() === filter.toLowerCase());
+    return matchesQuery && matchesFilter;
+  });
 
   return (
     <div>
