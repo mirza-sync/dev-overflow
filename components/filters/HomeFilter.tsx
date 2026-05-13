@@ -20,18 +20,18 @@ const HomeFilter = () => {
   const [active, setActive] = useState(filterParams || "");
 
   const handleFilterChange = (filterValue: string) => {
-    let newUrl = "`";
+    let newUrl = "";
 
     if (filterValue === active) {
       setActive("");
       newUrl = removeKeysFromUrlQuery({
-        params: filterParams.toString(),
+        params: searchParams.toString(),
         keysToRemove: ["filter"],
       });
     } else {
       setActive(filterValue);
       newUrl = formUrlQuery({
-        params: filterParams.toString(),
+        params: searchParams.toString(),
         key: "filter",
         value: filterValue,
       });
