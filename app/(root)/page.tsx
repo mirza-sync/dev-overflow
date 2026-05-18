@@ -1,3 +1,4 @@
+import QuestionCard from "@/components/cards/QuestionCard";
 import HomeFilter from "@/components/filters/HomeFilter";
 import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
@@ -8,32 +9,32 @@ interface SearchParams {
   searchParams: Promise<{ [key: string]: string }>;
 }
 
-const questions = [
+const questions: Question[] = [
   {
-    id: 1,
+    id: "1",
     title: "How to implement authentication in Next.js?",
     description:
       "I'm building a Next.js app and need to add user authentication. What are the best practices and libraries to use?",
     tags: [
-      { id: 1, name: "Next.js" },
-      { id: 2, name: "React.js" },
+      { id: "1", name: "Next.js" },
+      { id: "2", name: "React.js" },
     ],
-    author: { id: 1, name: "John Doe" },
+    author: { id: "1", name: "John Doe" },
     createdAt: new Date(),
     upvotes: 10,
     answers: 5,
     views: 100,
   },
   {
-    id: 2,
+    id: "2",
     title: "How to do for loops in JavaScript or React?",
     description:
       "I'm new to JavaScript and React, and I'm trying to understand how to use for loops effectively in my code. Can someone provide examples of how to use for loops in both JavaScript and React?",
     tags: [
-      { id: 1, name: "JavaScript" },
-      { id: 2, name: "React.js" },
+      { id: "1", name: "JavaScript" },
+      { id: "2", name: "React.js" },
     ],
-    author: { id: 1, name: "John Doe" },
+    author: { id: "1", name: "John Doe" },
     createdAt: new Date(),
     upvotes: 8,
     answers: 3,
@@ -45,8 +46,14 @@ export default async function Home({ searchParams }: SearchParams) {
   const { query = "", filter = "" } = await searchParams;
 
   const filteredQuestions = questions.filter((question) => {
-    const matchesQuery = question.title.toLowerCase().includes(query?.toLocaleLowerCase());
-    const matchesFilter = !filter || question.tags.some(tag => tag.name.toLowerCase() === filter.toLowerCase());
+    const matchesQuery = question.title
+      .toLowerCase()
+      .includes(query?.toLocaleLowerCase());
+    const matchesFilter =
+      !filter ||
+      question.tags.some(
+        (tag) => tag.name.toLowerCase() === filter.toLowerCase()
+      );
     return matchesQuery && matchesFilter;
   });
 
@@ -70,7 +77,7 @@ export default async function Home({ searchParams }: SearchParams) {
 
       <div className="mt-10 flex w-full flex-col gap-6">
         {filteredQuestions.map((question) => (
-          <h1 key={question.id}>{question.title}</h1>
+          <QuestionCard key={question.id} question={question} />
         ))}
       </div>
     </div>
