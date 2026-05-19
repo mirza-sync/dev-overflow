@@ -1,6 +1,7 @@
 import ROUTES from "@/constants/routes";
 import { getTimeAgo } from "@/lib/utils";
 import Link from "next/link";
+import TagCard from "./TagCard";
 
 interface QuestionCardProps {
   question: Question;
@@ -22,6 +23,12 @@ const QuestionCard = ({
             </h3>
           </Link>
         </div>
+      </div>
+
+      <div className="mt-3.5 flex w-full flex-wrap gap-2">
+        {tags.map((tag) => (
+          <TagCard key={tag.id} id={tag.id} name={tag.name} compact />
+        ))}
       </div>
     </div>
   );
