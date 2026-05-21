@@ -2,6 +2,7 @@ import ROUTES from "@/constants/routes";
 import { getTimeAgo } from "@/lib/utils";
 import Link from "next/link";
 import TagCard from "./TagCard";
+import Metric from "../Metric";
 
 interface QuestionCardProps {
   question: Question;
@@ -29,6 +30,42 @@ const QuestionCard = ({
         {tags.map((tag) => (
           <TagCard key={tag.id} id={tag.id} name={tag.name} compact />
         ))}
+      </div>
+
+      <div className="flex-between mt-6 w-full flex-wrap gap-3">
+        <Metric
+          imgUrl={author.image}
+          alt={author.name}
+          value={author.value}
+          title={` asked ${getTimeAgo(createdAt)}`}
+          href={ROUTES.PROFILE(author.id)}
+          textStyles="body-medium text-dark400_light700"
+          isAuthor
+        />
+
+        <div className="flex items-center gap-3 max-sm:flex-wrap max-sm:justify-start">
+          <Metric
+            imgUrl="/icons/like.svg"
+            alt="like"
+            value={upvotes}
+            title="Votes"
+            textStyles="body-medium text-dark400_light800"
+          />
+          <Metric
+            imgUrl="/icons/message.svg"
+            alt="comment"
+            value={answers}
+            title="Answers"
+            textStyles="body-medium text-dark400_light800"
+          />
+          <Metric
+            imgUrl="/icons/eye.svg"
+            alt="view"
+            value={views}
+            title="Views"
+            textStyles="body-medium text-dark400_light800"
+          />
+        </div>
       </div>
     </div>
   );
