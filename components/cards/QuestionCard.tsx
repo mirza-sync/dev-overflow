@@ -36,7 +36,7 @@ const QuestionCard = ({
         <Metric
           imgUrl={author.image}
           alt={author.name}
-          value={author.value}
+          value={author.name}
           title={` asked ${getTimeAgo(createdAt)}`}
           href={ROUTES.PROFILE(author.id)}
           textStyles="body-medium text-dark400_light700"

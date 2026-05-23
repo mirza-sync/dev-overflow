@@ -6,7 +6,7 @@ interface Tag {
 interface Author {
   id: string;
   name: string;
-  image?: string;
+  image: string;
 }
 
 interface Question {
