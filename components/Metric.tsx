@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 interface MetricProps {
   imgUrl: string;
   alt: string;
@@ -21,15 +23,20 @@ const Metric = ({
 }: MetricProps) => {
   return (
     <div className="flex items-center gap-2">
-      <img
+      <Image
         src={imgUrl}
         alt={alt}
         width={16}
         height={16}
         className={imgStyles}
       />
-      <p className={textStyles}>
-        {value} {title}
+      <p className={`${textStyles} flex items-center gap-1`}>
+        {value}
+        <span
+          className={`small-regular line-clamp-1 ${isAuthor ? "max-sm:hidden" : ""}`}
+        >
+          {title}
+        </span>
       </p>
     </div>
   );
