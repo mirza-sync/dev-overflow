@@ -6,6 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import z from "zod";
 import { Field, FieldLabel, FieldError, FieldDescription } from "../ui/field";
 import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 
 const QuestionForm = () => {
   const form = useForm({
@@ -21,7 +22,10 @@ const QuestionForm = () => {
 
   return (
     <div>
-      <form onSubmit={form.handleSubmit(handleCreateQuestion)}>
+      <form
+        className="flex w-full flex-col gap-10"
+        onSubmit={form.handleSubmit(handleCreateQuestion)}
+      >
         <Controller
           key="title"
           name="title"
@@ -93,15 +97,25 @@ const QuestionForm = () => {
                   placeholder="Add tags..."
                   className="paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 no-focus min-h-14 border"
                 />
+                {/* TODO: Show added tags */}
               </div>
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
               <FieldDescription className="body-regular text-light-500 mt-2.5">
-                Be specific and imagine you’re asking a question to another
-                person.
+                Add up to 5 tags to describe what your question is about. You
+                need to press enter to add a tag.
               </FieldDescription>
             </Field>
           )}
         />
+
+        <div className="mt-16 flex justify-end">
+          <Button
+            type="submit"
+            className="primary-gradient text-light-900 h-10 w-fit"
+          >
+            Ask A Question
+          </Button>
+        </div>
       </form>
     </div>
   );
