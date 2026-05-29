@@ -7,8 +7,24 @@ import z from "zod";
 import { Field, FieldLabel, FieldError, FieldDescription } from "../ui/field";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { useRef } from "react";
+import { MDXEditorMethods } from "@mdxeditor/editor";
+import Editor from "../editor";
+
+//====================================
+// Below dynamic import was from MDXEditor docs...
+// MDX Editor doesn't work with SSR, so we need to dynamically import it.
+// However, since we're already in a client component, we can directly import it without dynamic import.
+// ----------------------------------
+// import dynamic from "next/dynamic";
+// const Editor = dynamic(() => import("@/components/editor/index"), {
+//   ssr: false,
+// });
+//====================================
 
 const QuestionForm = () => {
+  const editorRef = useRef<MDXEditorMethods>(null);
+
   const form = useForm({
     resolver: zodResolver(AskQuestionSchema),
     defaultValues: {
@@ -67,7 +83,7 @@ const QuestionForm = () => {
                 Detailed explanation of your problem{" "}
                 <span className="text-primary-500">*</span>
               </FieldLabel>
-              {/* Editor */}
+              <Editor editorRef={editorRef} markdown={field.value} />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
               <FieldDescription className="body-regular text-light-500 mt-2.5">
                 Introduce the problem and expand on what you put in the title.
