@@ -83,7 +83,11 @@ const QuestionForm = () => {
                 Detailed explanation of your problem{" "}
                 <span className="text-primary-500">*</span>
               </FieldLabel>
-              <Editor editorRef={editorRef} markdown={field.value} />
+              <Editor
+                editorRef={editorRef}
+                markdown={field.value}
+                onChange={field.onChange}
+              />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
               <FieldDescription className="body-regular text-light-500 mt-2.5">
                 Introduce the problem and expand on what you put in the title.
