@@ -10,6 +10,7 @@ import { Button } from "../ui/button";
 import { useRef } from "react";
 import { MDXEditorMethods } from "@mdxeditor/editor";
 import Editor from "../editor";
+import TagCard from "../cards/TagCard";
 
 //====================================
 // Below dynamic import was from MDXEditor docs...
@@ -33,6 +34,29 @@ const QuestionForm = () => {
       tags: [],
     },
   });
+
+  const handleAddTag = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    field: { value: string[] }
+  ) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const tagInput = e.currentTarget.value.trim();
+
+      if (tagInput.length < 15 && !field.value.includes(tagInput)) {
+        form.setValue("tags", [...field.value, tagInput]);
+        e.currentTarget.value = "";
+        form.clearErrors("tags");
+      } else if (tagInput.length >= 15) {
+        form.setError("tags", {
+          type: "manual",
+          message: "Tag must be less than 15 characters",
+        });
+      } else if (field.value.includes(tagInput)) {
+        form.setError("tags", { type: "manual", message: "Tag already added" });
+      }
+    }
+  };
 
   const handleCreateQuestion = (data: z.infer<typeof AskQuestionSchema>) => {};
 
@@ -110,14 +134,20 @@ const QuestionForm = () => {
               </FieldLabel>
               <div>
                 <Input
-                  {...field}
                   id={field.name}
                   type="text"
                   aria-invalid={fieldState.invalid}
                   placeholder="Add tags..."
                   className="paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 no-focus min-h-14 border"
+                  onKeyDown={(e) => handleAddTag(e, field)}
                 />
-                {/* TODO: Show added tags */}
+                {field.value.length > 0 && (
+                  <div className="flex-start mt-2.5 flex-wrap gap-2.5">
+                    {field.value.map((tag) => (
+                      <TagCard key={tag} id={tag} name={tag} />
+                    ))}
+                  </div>
+                )}
               </div>
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
               <FieldDescription className="body-regular text-light-500 mt-2.5">
