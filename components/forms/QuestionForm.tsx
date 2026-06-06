@@ -58,6 +58,18 @@ const QuestionForm = () => {
     }
   };
 
+  const handleRemoveTag = (tag: string) => {
+    const updatedTags = form.getValues("tags").filter((t) => t !== tag);
+    form.setValue("tags", updatedTags);
+
+    if (updatedTags.length === 0) {
+      form.setError("tags", {
+        type: "manual",
+        message: "At least one tag is required",
+      });
+    }
+  };
+
   const handleCreateQuestion = (data: z.infer<typeof AskQuestionSchema>) => {};
 
   return (
@@ -144,7 +156,13 @@ const QuestionForm = () => {
                 {field.value.length > 0 && (
                   <div className="flex-start mt-2.5 flex-wrap gap-2.5">
                     {field.value.map((tag) => (
-                      <TagCard key={tag} id={tag} name={tag} />
+                      <TagCard
+                        key={tag}
+                        id={tag}
+                        name={tag}
+                        isRemovable
+                        onRemoveTag={handleRemoveTag}
+                      />
                     ))}
                   </div>
                 )}
