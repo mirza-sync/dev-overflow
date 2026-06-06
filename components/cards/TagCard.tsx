@@ -41,7 +41,7 @@ const TagCard = ({
             width={12}
             height={12}
             alt="X icon"
-            onClick={() => onRemoveTag && onRemoveTag(name)}
+            onClick={() => onRemoveTag?.(name)}
           />
         )}
       </Badge>
