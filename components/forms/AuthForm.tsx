@@ -26,7 +26,6 @@ interface AuthFormProps<T extends FieldValues> {
 const AuthForm = <T extends FieldValues>({
   schema,
   defaultValues,
-  onSubmit,
   formType,
 }: AuthFormProps<T>) => {
   const form = useForm<z.infer<typeof schema>>({
@@ -73,7 +72,7 @@ const AuthForm = <T extends FieldValues>({
 
       <Button
         disabled={form.formState.isSubmitting}
-        className="primary-gradient paragraph-medium rounded-2 font-inter !text-light-900 min-h-12 w-full px-4 py-3"
+        className="primary-gradient paragraph-medium rounded-2 font-inter text-light-900! min-h-12 w-full px-4 py-3"
       >
         {form.formState.isSubmitting
           ? buttonText === "Sign In"
