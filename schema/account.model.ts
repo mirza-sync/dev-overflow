@@ -3,6 +3,7 @@ import { model, models, Schema, Types } from "mongoose";
 export interface IAccount {
   userId: Types.ObjectId;
   name: string;
+  password?: string; // Password is optional since it was not needed in OAuth accounts
   provider: string;
   providerAccountId: string;
 }
@@ -10,6 +11,7 @@ export interface IAccount {
 const AccountSchema = new Schema<IAccount>({
   userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
   name: { type: String, required: true },
+  password: { type: String },
   provider: { type: String, required: true },
   providerAccountId: { type: String, required: true },
 });
