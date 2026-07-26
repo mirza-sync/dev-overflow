@@ -1,4 +1,5 @@
 export interface RequestError extends Error {
+  readonly name: ErrorNameType;
   readonly statusCode: number;
   readonly errors?: Record<string, string[]>;
 }
@@ -17,10 +18,9 @@ export const createRequestError = (
   statusCode: number,
   message: string,
   errors?: Record<string, string[]>,
-  name = "RequestError"
+  name: ErrorNameType = ErrorName.RequestError
 ): RequestError => {
   const error = new Error(message) as RequestError;
-
   return Object.freeze(
     Object.assign(error, {
       name,
@@ -37,16 +37,31 @@ export const createValidationError = (
     400,
     formatFieldErrors(fieldErrors),
     fieldErrors,
-    "ValidationError"
+    ErrorName.ValidationError
   );
 
 export const createNotFoundError = (resource: string): RequestError =>
-  createRequestError(404, `${resource} not found`, undefined, "NotFoundError");
+  createRequestError(
+    404,
+    `${resource} not found`,
+    undefined,
+    ErrorName.NotFoundError
+  );
 
 export const createForbiddenError = (message = "Forbidden"): RequestError =>
-  createRequestError(403, message, undefined, "ForbiddenError");
+  createRequestError(403, message, undefined, ErrorName.ForbiddenError);
 
 export const createUnauthorizedError = (
   message = "Unauthorized"
 ): RequestError =>
-  createRequestError(401, message, undefined, "UnauthorizedError");
+  createRequestError(401, message, undefined, ErrorName.UnauthorizedError);
+
+export const ErrorName = {
+  RequestError: "RequestError",
+  ValidationError: "ValidationError",
+  NotFoundError: "NotFoundError",
+  ForbiddenError: "ForbiddenError",
+  UnauthorizedError: "UnauthorizedError",
+} as const;
+
+export type ErrorNameType = (typeof ErrorName)[keyof typeof ErrorName];
