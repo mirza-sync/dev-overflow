@@ -1,5 +1,15 @@
+export const Errors = {
+  RequestError: "RequestError",
+  ValidationError: "ValidationError",
+  NotFoundError: "NotFoundError",
+  ForbiddenError: "ForbiddenError",
+  UnauthorizedError: "UnauthorizedError",
+} as const;
+
+export type ErrorName = (typeof Errors)[keyof typeof Errors];
+
 export interface RequestError extends Error {
-  readonly name: ErrorNameType;
+  readonly name: ErrorName;
   readonly statusCode: number;
   readonly errors?: Record<string, string[]>;
 }
@@ -14,11 +24,11 @@ export const formatFieldErrors = (errors: Record<string, string[]>): string =>
     })
     .join(", ");
 
-export const createRequestError = (
+export const RequestError = (
   statusCode: number,
   message: string,
   errors?: Record<string, string[]>,
-  name: ErrorNameType = ErrorName.RequestError
+  name: ErrorName = Errors.RequestError
 ): RequestError => {
   const error = new Error(message) as RequestError;
   return Object.freeze(
@@ -30,38 +40,21 @@ export const createRequestError = (
   );
 };
 
-export const createValidationError = (
+export const ValidationError = (
   fieldErrors: Record<string, string[]>
 ): RequestError =>
-  createRequestError(
+  RequestError(
     400,
     formatFieldErrors(fieldErrors),
     fieldErrors,
-    ErrorName.ValidationError
+    Errors.ValidationError
   );
 
-export const createNotFoundError = (resource: string): RequestError =>
-  createRequestError(
-    404,
-    `${resource} not found`,
-    undefined,
-    ErrorName.NotFoundError
-  );
+export const NotFoundError = (resource: string): RequestError =>
+  RequestError(404, `${resource} not found`, undefined, Errors.NotFoundError);
 
-export const createForbiddenError = (message = "Forbidden"): RequestError =>
-  createRequestError(403, message, undefined, ErrorName.ForbiddenError);
+export const ForbiddenError = (message = "Forbidden"): RequestError =>
+  RequestError(403, message, undefined, Errors.ForbiddenError);
 
-export const createUnauthorizedError = (
-  message = "Unauthorized"
-): RequestError =>
-  createRequestError(401, message, undefined, ErrorName.UnauthorizedError);
-
-export const ErrorName = {
-  RequestError: "RequestError",
-  ValidationError: "ValidationError",
-  NotFoundError: "NotFoundError",
-  ForbiddenError: "ForbiddenError",
-  UnauthorizedError: "UnauthorizedError",
-} as const;
-
-export type ErrorNameType = (typeof ErrorName)[keyof typeof ErrorName];
+export const UnauthorizedError = (message = "Unauthorized"): RequestError =>
+  RequestError(401, message, undefined, Errors.UnauthorizedError);
