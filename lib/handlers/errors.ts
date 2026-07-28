@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import z, { ZodError } from "zod";
-import { ValidationError } from "../http-errors";
+import { RequestError, ValidationError } from "../http-errors";
 
 export type ResponseType = "api" | "server";
 
@@ -23,7 +23,25 @@ const formatResponse = (
     : { status, ...responseContent };
 };
 
+const isRequestError = (error: unknown): error is RequestError => {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "statusCode" in error &&
+    "name" in error
+  );
+};
+
 const handleError = (error: unknown, responseType: ResponseType = "server") => {
+  if (isRequestError(error)) {
+    return formatResponse(
+      responseType,
+      error.statusCode,
+      error.message,
+      error.errors
+    );
+  }
+
   if (error instanceof ZodError) {
     const validationError = ValidationError(z.treeifyError(error));
 
@@ -33,6 +51,10 @@ const handleError = (error: unknown, responseType: ResponseType = "server") => {
       validationError.message,
       validationError.errors
     );
+  }
+
+  if (error instanceof Error) {
+    return formatResponse(responseType, 500, error.message);
   }
 };
 
