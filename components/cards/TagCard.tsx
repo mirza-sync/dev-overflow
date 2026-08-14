@@ -20,7 +20,6 @@ const TagCard = ({
   name,
   questions,
   showCount,
-  isCompact,
   isRemovable,
   onRemoveTag,
   hasHref,
