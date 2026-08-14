@@ -2,7 +2,7 @@ import { model, models, Schema, Types } from "mongoose";
 
 export interface IInteraction {
   user: Types.ObjectId;
-  action: String;
+  action: string;
   actionId: Types.ObjectId;
   actionType: string;
 }
