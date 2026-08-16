@@ -24,7 +24,7 @@ export async function POST(request: Request) {
 
     const validatedData = UserSchema.safeParse(body);
     if (!validatedData.success) {
-      throw ValidationError(z.treeifyError(validatedData.error));
+      throw ValidationError(z.flattenError(validatedData.error).fieldErrors);
     }
 
     const { email, username } = validatedData.data;
